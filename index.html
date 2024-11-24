@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Management Calculator</title>
+    <style>
+        /* Reset margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Page styling */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        /* Calculator container */
+        .calculator-container {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Headings */
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        /* Input field styling */
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        /* Button styling */
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Result text */
+        h3 {
+            margin-top: 20px;
+            color: #007bff;
+        }
+
+        p#result {
+            font-size: 1rem;
+            color: #333;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator-container">
+        <h2>Risk Management Calculator</h2>
+        <label for="capital">Enter your Capital:</label>
+        <input type="number" id="capital" placeholder="e.g., 10000" required>
+        <button onclick="calculateLotSize()">Calculate Lot Size</button>
+
+        <h3>Results:</h3>
+        <p id="result">Enter your capital to calculate your lot size.</p>
+    </div>
+
+    <script>
+        function calculateLotSize() {
+            // Get capital input from user
+            const capital = parseFloat(document.getElementById('capital').value);
+            
+            // Risk parameters
+            const maxLossPercentage = 0.05;  // 5% of capital
+            const lossPerLot = 250;          // Fixed loss per lot
+            const lotQuantity = 25;          // Quantity per lot
+            
+            
+            // Calculate maximum allowable loss
+            const maxLoss = capital * maxLossPercentage;
+            
+            // Determine the number of lots based on max loss and fixed loss per lot
+            const lots = Math.floor(maxLoss / lossPerLot);
+
+            
+            // Calculate the total quantity based on the lot size
+            const totalQuantity = lots * lotQuantity;
+            
+            // Display the result
+            document.getElementById('result').innerText = capital
+                ? `Based on a capital of ${capital.toFixed(2)}, 
+                   you can take a maximum of ${lots} (s), 
+                   with a total quantity of ${totalQuantity} units 
+                   to stay within the 5% risk management limit.`
+                : "Please enter a valid capital amount.";
+        }
+    </script>
+</body>
+</html>
